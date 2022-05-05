@@ -3,18 +3,13 @@ import { createRoot } from 'react-dom/client'
 import './styles/base.css'
 import './styles/index.css'
 
-//import components
 import TodoHeader from './components/TodoHeader'
 import TodoMain from './components/TodoMain'
 import TodoFooter from './components/TodoFooter'
 
 class App extends Component {
   state = {
-    list: [
-      { id: 1, name: 'eating', done: false },
-      { id: 2, name: 'sleeping', done: true },
-      { id: 3, name: 'playing', done: false },
-    ],
+    list: [],
     type: 'all',
   }
   render() {
@@ -104,6 +99,14 @@ class App extends Component {
         }
       }),
     })
+  }
+  componentDidMount() {
+    this.setState({
+      list: JSON.parse(localStorage.getItem('todos')) || [],
+    })
+  }
+  componentDidUpdate() {
+    localStorage.setItem('todos', JSON.stringify(this.state.list))
   }
 }
 
